@@ -1,0 +1,27 @@
+---
+- name: Install fail2ban
+  ignore_errors: true
+  hosts: all
+  tasks:
+    - name: Install Epel on RedHat Family
+      when: ansible_os_family = "RedHat"
+      package:
+        name: epel-release
+
+    - name: Install fail2ban  on All
+      package:
+        name: fail2ban
+
+    - name: Run fail2ban  0n RedHat 6
+      when: ( 'ansible_os_family == "RedHat" and ansible_didtribution_major_varsion == "6"')
+      service:
+        name: fail2ban
+        state: restarted
+
+    
+    - name: Run fail2ban  0n RedHat 7
+      when: ( 'ansible_os_family == "RedHat" and ansible_didtribution_major_varsion == "7"  ')
+      service:
+        name: fail2ban
+        state: restarted
+
